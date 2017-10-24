@@ -7,14 +7,49 @@ using System.Threading.Tasks;
 
 namespace Kombinatorik {
 	class Block {
-		public Grid Parent { get; set; }
+		public Point P {
+			get { return new Point(X, Y); }
+			private set { X = value.X; Y = value.Y; }
+		}
 		public int X { get; private set; }
 		public int Y { get; private set; }
 		private const bool F = false;
 		private const bool T = true;
 		public bool[,] Layout { get; set; }
 		public Color Color { get; }
-		public static Block B1x3 {
+		#region Block Presets
+		#region B1
+		public static Block B1_1x1 {
+			get {
+				return new Block(
+					new bool[,]{
+						{ T }
+					}, Color.FromArgb(255, 255, 255));
+			}
+		}
+		#endregion
+		#region B2
+		public static Block B2_2x1 {
+			get {
+				return new Block(
+					new bool[,]{
+						{ T, T }
+					}, Color.FromArgb(200, 200, 255));
+			}
+		}
+		public static Block B2_1x2 {
+			get {
+				return new Block(
+					new bool[,]{
+						{ T },
+						{ T }
+					}, Color.FromArgb(200,255,200));
+			}
+		}
+		#endregion
+		#region B3
+		#region straight
+		public static Block B3_1x3 {
 			get {
 				return new Block(
 					new bool[,]{
@@ -24,7 +59,7 @@ namespace Kombinatorik {
 					}, Color.Yellow);
 			}
 		}
-		public static Block B3x1 {
+		public static Block B3_3x1 {
 			get {
 				return new Block(
 					new bool[,]{
@@ -32,7 +67,9 @@ namespace Kombinatorik {
 					}, Color.Orange);
 			}
 		}
-		public static Block B2x2A {
+		#endregion
+		#region corner
+		public static Block B3_2x2A {
 			get {
 				return new Block(
 					new bool[,] {
@@ -41,7 +78,7 @@ namespace Kombinatorik {
 					}, Color.Cyan);
 			}
 		}
-		public static Block B2x2B {
+		public static Block B3_2x2B {
 			get {
 				return new Block(
 					new bool[,] {
@@ -50,7 +87,7 @@ namespace Kombinatorik {
 					}, Color.Blue);
 			}
 		}
-		public static Block B2x2C {
+		public static Block B3_2x2C {
 			get {
 				return new Block(
 					new bool[,] {
@@ -59,7 +96,7 @@ namespace Kombinatorik {
 					}, Color.Purple);
 			}
 		}
-		public static Block B2x2D {
+		public static Block B3_2x2D {
 			get {
 				return new Block(
 					new bool[,] {
@@ -68,12 +105,25 @@ namespace Kombinatorik {
 					}, Color.Green);
 			}
 		}
+		#endregion
+		#endregion
+		#endregion
+		#region Block Lists
+		public static List<Block> B1 { get { return new List<Block>() { B1_1x1 }; } }
+		public static List<Block> B2 { get { return new List<Block>() { B2_1x2, B2_2x1 }; } }
+		public static List<Block> B3 { get { return new List<Block>() { B3_1x3, B3_3x1, B3_2x2A, B3_2x2B, B3_2x2C, B3_2x2D }; } }
+		public static List<List<Block>> B { get { return new List<List<Block>>() { B1, B2, B3 }; } }
+		public static List<Block> BAll { get { return B.SelectMany(LB => LB).ToList(); } }
+		#endregion
+
+		public Block Duplicate() { return new Block(Layout, Color); }
 
 		public Block(bool[,] layout, Color? c = null) {
 			Color = c.HasValue ? c.Value : Color.White;
 			Layout = layout;
 		}
 
+		public bool Contains(Point p) { return Contains(p.X, p.Y); }
 		public bool Contains(int x, int y) {
 			return
 				//check bounds
@@ -84,9 +134,10 @@ namespace Kombinatorik {
 				Layout[x - X, y - Y];
 		}
 
+		public bool CanApply(Grid grid, Point p) { return CanApply(grid, p.X, p.Y); }
 		public bool CanApply(Grid grid, int x, int y) {
 			// check if placement is inside bounds
-			if (x < 0 || y < 0 || x + Layout.GetLength(0) - 1 > grid.W || y + Layout.GetLength(1) > grid.H)
+			if (x < 0 || y < 0 || x + Layout.GetLength(0) > grid.W || y + Layout.GetLength(1) > grid.H)
 				return false;
 			// Check for conflict of each position
 			for (int posX = x ; posX < x + Layout.GetLength(0) ; posX++)
@@ -99,6 +150,7 @@ namespace Kombinatorik {
 			return true;
 		}
 
+		public void Apply(Grid grid, Point p) { Apply(grid, p.X, p.Y); }
 		public void Apply(Grid grid, int x, int y) {
 			if (CanApply(grid, x, y)) {
 				X = x;
@@ -119,6 +171,14 @@ namespace Kombinatorik {
 			}
 			return str;
 		}
+
+		public void IterateLayout(LayoutIterationDelegate action) {
+			for (int x = 0 ; x < Layout.GetLength(0) ; x++)
+				for (int y = 0 ; y < Layout.GetLength(1) ; y++)
+					action(x, y, Layout[x, y]);
+		}
+
+		public delegate void LayoutIterationDelegate(int x, int y, bool occupied);
 
 	}
 }

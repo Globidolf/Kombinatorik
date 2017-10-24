@@ -62,7 +62,7 @@
 			this.ele_nud_gridx.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.ele_nud_gridx.Location = new System.Drawing.Point(83, 272);
 			this.ele_nud_gridx.Minimum = new decimal(new int[] {
-            2,
+            1,
             0,
             0,
             0});
@@ -80,7 +80,7 @@
 			this.ele_nud_gridy.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.ele_nud_gridy.Location = new System.Drawing.Point(131, 272);
 			this.ele_nud_gridy.Minimum = new decimal(new int[] {
-            2,
+            1,
             0,
             0,
             0});
