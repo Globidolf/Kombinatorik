@@ -46,14 +46,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Block.cs" />
     <Compile Include="CombinatorScreen.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="CombinatorScreen.Designer.cs">
       <DependentUpon>CombinatorScreen.cs</DependentUpon>
     </Compile>
-    <Compile Include="Grid.cs" />
+    <Compile Include="Grid2.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="CombinatorScreen.resx">
