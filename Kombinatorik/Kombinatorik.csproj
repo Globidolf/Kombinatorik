@@ -52,7 +52,7 @@
     <Compile Include="CombinatorScreen.Designer.cs">
       <DependentUpon>CombinatorScreen.cs</DependentUpon>
     </Compile>
-    <Compile Include="Grid2.cs" />
+    <Compile Include="Grid.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="CombinatorScreen.resx">
