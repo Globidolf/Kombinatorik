@@ -13,7 +13,12 @@ namespace Kombinatorik {
 		static void Main() {
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
+
 			Application.Run(new CombinatorScreen());
+			/*
+			Algorythm_X.init();
+			Console.WriteLine(Algorythm_X.combinations);
+			*/
 		}
 	}
 }

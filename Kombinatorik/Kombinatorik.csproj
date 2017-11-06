@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Algorythm_X.cs" />
     <Compile Include="CombinatorScreen.cs">
       <SubType>Form</SubType>
     </Compile>
